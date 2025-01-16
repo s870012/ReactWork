@@ -13,7 +13,6 @@ const Modal = ({
   addImg, 
   removeImg
 }) => {
-  console.log(controlImgInput)
   return(<>
     <div id="productModal" className="modal fade" tabIndex="-1" ref={editModalRef}>
       <div className="modal-dialog modal-xl">
@@ -39,8 +38,8 @@ const Modal = ({
                   <img className="img-fluid" src={tempProduct.imageUrl} alt="主圖" />
                 </div>
                 <div className="border border-2 border-dashed rounded-3 p-3">
-                  {tempProduct.imagesUrl.map((image, index) => (
-                    <div key={index} className="mb-2">
+                  {tempProduct.imagesUrl.map((image, index) => {
+                    return (<div key={index} className="mb-2">
                       <label htmlFor={`newImages${index}`} className="form-label">副圖{index + 1}</label>
                       <input
                         id={`newImages${index}`}
@@ -57,8 +56,8 @@ const Modal = ({
                           className="img-preview mb-2"
                         />
                       )}
-                    </div>
-                  ))}
+                    </div>)
+                  })}
                 </div>
                 <div>
                   <button className="btn btn-outline-primary btn-sm d-block w-100" onClick={addImg}>
@@ -197,8 +196,8 @@ function ReactWeek3(){
   const path = import.meta.env.VITE_API_PATH; 
   
   const [user, setUser] = useState({
-      username:'s8700122000@gmail.com',
-      password:'chen810516tw'
+      username:'',
+      password:''
   })
 
   const [isLogin, setIsLogin] = useState(false);
@@ -209,7 +208,6 @@ function ReactWeek3(){
     try {
     const res = await axios.get(`${url}/api/${path}/admin/products`)
     setProducts(res.data.products);
-    console.log(res.data)
     } catch (error) {
     console.dir(error);
     }
@@ -322,6 +320,7 @@ function ReactWeek3(){
         console.log(res.data)
       }
       getProducts();
+      setTempProduct(product)
       controlModal.current.hide();
     } catch (error) {
       if(tempProduct.id===''){
@@ -372,9 +371,9 @@ function ReactWeek3(){
   // deleteModal
   const deleteRef = useRef(null);
   const deleteModal = (product) => {
-    setTempProduct(product)
     controlModal.current = new bootstrap.Modal(deleteRef.current)
     controlModal.current.show();
+    setTempProduct(product)
   }
 
   const deleteProduct = async (product) =>{
