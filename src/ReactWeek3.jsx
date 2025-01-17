@@ -38,14 +38,14 @@ const Modal = ({
                   <img className="img-fluid" src={tempProduct.imageUrl} alt="主圖" />
                 </div>
                 <div className="border border-2 border-dashed rounded-3 p-3">
-                  {tempProduct.imagesUrl.map((image, index) => {
+                  {tempProduct.imagesUrl?.map((image, index) => {
                     return (<div key={index} className="mb-2">
                       <label htmlFor={`newImages${index}`} className="form-label">副圖{index + 1}</label>
                       <input
                         id={`newImages${index}`}
                         type="text"
                         value={image}
-                        onChange={controlImgInput}
+                        onChange={(e) => controlImgInput(e, index)}
                         placeholder={`圖片網址 ${index + 1}`}
                         className="form-control mb-2"
                       />
@@ -203,6 +203,8 @@ function ReactWeek3(){
   const [isLogin, setIsLogin] = useState(false);
   const [products, setProducts] = useState([]);
 
+  
+
   //login
   const getProducts = async () => {
     try {
@@ -261,7 +263,7 @@ function ReactWeek3(){
     description: "",
     content: "",
     is_enabled: false,
-    imagesUrl: [""]
+    imagesUrl: []
   });
 
   // modal
@@ -283,7 +285,7 @@ function ReactWeek3(){
         description: "",
         content: "",
         is_enabled: 0,
-        imagesUrl: [""]
+        imagesUrl: []
       })
     }
     controlModal.current = new bootstrap.Modal(editModalRef.current)
