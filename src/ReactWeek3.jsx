@@ -262,7 +262,7 @@ function ReactWeek3(){
     price: "",
     description: "",
     content: "",
-    is_enabled: false,
+    is_enabled: 0,
     imagesUrl: []
   });
 
