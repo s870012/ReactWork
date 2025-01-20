@@ -301,8 +301,7 @@ function ReactWeek3(){
   }
 
   // edit product
-  const editProduct = async (product) => {
-    setTempProduct(product)
+  const editProduct = async () => {
     const productData ={
       data:{
         ...tempProduct,
@@ -322,7 +321,6 @@ function ReactWeek3(){
         console.log(res.data)
       }
       getProducts();
-      setTempProduct(product)
       controlModal.current.hide();
     } catch (error) {
       if(tempProduct.id===''){
@@ -378,8 +376,7 @@ function ReactWeek3(){
     setTempProduct(product)
   }
 
-  const deleteProduct = async (product) =>{
-    setTempProduct(product)
+  const deleteProduct = async () =>{
     try {
       const res = await axios.delete(`${url}/api/${path}/admin/product/${tempProduct.id}`)
       console.log('刪除成功', res.data);
