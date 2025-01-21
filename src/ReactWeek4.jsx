@@ -63,7 +63,19 @@ function ReactWeek4(){
       "$1"
     );
     axios.defaults.headers.common.Authorization = token;
-
+    const checkLogin = async() => {
+      try {
+      const token = document.cookie.replace(
+        /(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/,
+        "$1",
+      );
+      axios.defaults.headers.common['Authorization'] = token;
+        const res = await axios.post(`${url}/api/user/check`)
+        alert("已登入")
+      } catch (error) {
+        console.dir(error);
+      }
+    }
   }, []);
 
   //product edit
@@ -182,6 +194,21 @@ function ReactWeek4(){
     }
   } 
 
+  // upLoad image
+  const controlFileChange = async(e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append('file-to-upload', file);
+    try {
+      const res = await axios.post(`${url}/api/${path}/admin/upload`, formData)
+      setTempProduct({
+        ...tempProduct,
+        imageUrl: res.data.imageUrl
+      })
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   // deleteModal
   const deleteRef = useRef(null);
@@ -206,6 +233,8 @@ function ReactWeek4(){
   const closeModal = () =>{
     controlModal.current.hide();
   }
+
+  
 
   return(<>
     {isLogin ? (<div>
@@ -281,8 +310,13 @@ function ReactWeek4(){
       controlImgInput={controlImgInput}
       addImg={addImg}
       removeImg={removeImg}
+      controlFileChange={controlFileChange}
     />
-    <DeleteModal deleteRef={deleteRef} closeModal={closeModal} tempProduct={tempProduct} deleteProduct={deleteProduct}/>
+    <DeleteModal
+      deleteRef={deleteRef} 
+      closeModal={closeModal} 
+      tempProduct={tempProduct} 
+      deleteProduct={deleteProduct}/>
   </>)
 }
 export default ReactWeek4;

@@ -1,4 +1,4 @@
-
+import PropTypes from "prop-types"
 
 export const Modal = ({
   editModalRef, 
@@ -8,8 +8,10 @@ export const Modal = ({
   editProduct,
   controlImgInput, 
   addImg, 
-  removeImg
+  removeImg,
+  controlFileChange
 }) => {
+
   return(<>
     <div id="productModal" className="modal fade" tabIndex="-1" ref={editModalRef}>
       <div className="modal-dialog modal-xl">
@@ -24,6 +26,16 @@ export const Modal = ({
             <div className="row">
               <div className="col-sm-4">
                 <div className="mb-2">
+                  <div className="mb-5">
+                    <label htmlFor="fileInput" className="form-label"> 圖片上傳 </label>
+                    <input
+                      type="file"
+                      accept=".jpg,.jpeg,.png"
+                      className="form-control"
+                      id="fileInput"
+                      onChange={controlFileChange}
+                    />
+                  </div>
                   <div className="mb-3">
                     <label htmlFor="imageUrl" className="form-label">
                       輸入圖片網址
@@ -191,4 +203,27 @@ export const DeleteModal = ({
       </div>
     </div>
   </>)
+}
+
+Modal.prototype = {
+  tempProduct: PropTypes.shape({
+    id: PropTypes.string,
+    imageUrl: PropTypes.string,
+    title: PropTypes.string,
+    category: PropTypes.string,
+    unit: PropTypes.string,
+    originPrice: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    price: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    description: PropTypes.string,
+    content: PropTypes.string,
+    isEnabled: PropTypes.bool,
+    imagesUrl: PropTypes.arrayOf(PropTypes.string),
+  }).isRequired, 
+  controlModalInput : PropTypes.func.isRequired,
+  closeModal : PropTypes.func.isRequired, 
+  editProduct : PropTypes.func.isRequired,
+  controlImgInput : PropTypes.func.isRequired, 
+  addImg : PropTypes.func.isRequired,
+  removeImg : PropTypes.func.isRequired,
+  controlFileChange : PropTypes.func.isRequired
 }
