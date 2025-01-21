@@ -11,8 +11,8 @@ function ReactWeek4(){
   const path = import.meta.env.VITE_API_PATH; 
   
   const [user, setUser] = useState({
-      username:'s8700122000@gmail.com',
-      password:'chen810516tw'
+      username:'',
+      password:''
   })
 
   const [isLogin, setIsLogin] = useState(false);
